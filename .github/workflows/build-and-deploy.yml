@@ -42,7 +42,14 @@ jobs:
 
     - name: Build app
       run: dotnet build --configuration Release --no-restore
+      
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
+    
     - name: Test app
       run: dotnet test --no-build
 
@@ -56,8 +63,4 @@ jobs:
         publish-profile: ${{ secrets.AZURE_CREDENTIAL }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
